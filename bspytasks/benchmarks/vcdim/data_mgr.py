@@ -6,8 +6,8 @@ from bspyproc.utils.pytorch import TorchUtils
 # ONE = 0.5
 # QUARTER =  (abs(ZERO) + abs(ONE)) / 4
 # TODO: Include this is the configuration file
-X = [-0.7, -0.7, 0.5, 0.5, -0.35, 0.25, 0.0, 0.0]
-Y = [-0.7, 0.5, -0.7, 0.5, 0.0, 0.0, -0.35, 0.25]
+X = [-0.7, -0.7, 0.5, 0.5, -0.35, 0.25, 0.0, 0.0, -1.1, 0.35]
+Y = [-0.7, 0.5, -0.7, 0.5, 0.0, 0.0, -0.35, 0.25, 0.35, -1.1]
 
 
 class VCDimDataManager():
