@@ -126,9 +126,10 @@ def validate_capacity(configs):
 
 
 if __name__ == "__main__":
-
+    # Validate single vc_dimension test, i.e. for a specific N
     # configs = load_configs('configs/benchmark_tests/validation/validate_vcdim.json')
     # capacity, correlation_array, accuracy_array, mserror_array = validate_outputs(configs)
 
-    configs = load_configs('configs/benchmark_tests/validation/validate_capacity.json')
+    # Validate multiple vc_dim tests
+    configs = load_configs('configs/benchmark_tests/validation/test_validate_capacity.json')
     validate_capacity(configs)

@@ -50,7 +50,7 @@ class BooleanGateTask():
 
     def find_gate(self, encoded_inputs, gate, encoded_gate, mask, threshold):
         min_threshold = (1 - 1 / len(gate)) * 100.0
-        assert threshold >= min_threshold, f"Threshold cannot be less or equal than {min_threshold}; it is now {threshold}"
+        assert threshold >= min_threshold, f"Threshold cannot be less than {min_threshold}; it is now {threshold}"
         if len(np.unique(gate)) == 1:
             print('Label ', gate, ' ignored')
             excel_results = self.ignore_gate(encoded_gate)
@@ -75,8 +75,13 @@ class BooleanGateTask():
                     print('==========================================================================================')
                     #  in get_plot_dir
                     self.plot_gate(excel_results, mask, str(gate), show_plots=self.show_plots, save_dir=self.get_plot_dir(gate, base_dir))
+                    print("RESETTING NOISE...")
+                    self.algorithm.processor.init_noise_configs()
                     break
                 else:
+                    if "noise" in self.algorithm.processor.configs:
+                        self.algorithm.processor.anneal_error(attempt, self.max_attempts)
+                        print(f"Annealing noise: {self.algorithm.processor.error}")
                     attempt += 1
 
         excel_results['gate'] = gate
@@ -206,14 +211,14 @@ def plot_gate_validation(output, prediction, gate, show_plots, save_dir=None):
     plt.close()
 
 
-def find_single_gate(configs_path, gate):
+def find_single_gate(configs_path, gate, dim):
     configs = load_configs(configs_path)
     configs = configs['capacity_test']['vc_dimension_test']
 
-    # gate = '[0 1 1 0]'
-    threshold = configs['boolean_gate_test']['algorithm_configs']['hyperparameters']['stop_threshold']  # 0.95
+    threshold_parameter = configs["threshold_parameter"]
+    threshold = (1 - (threshold_parameter / dim)) * 100.0
 
-    result = single_gate(configs, gate, threshold, validate=False)
+    result = single_gate(configs, gate, threshold, validate=False, vcdim=dim)
 
     # save('numpy', configs['boolean_gate_test']['results_base_dir'], 'control_voltages', overwrite=False, data=result['control_voltages'])
     # save('numpy', results_path, 'best_output', overwrite=False, data=result['best_output'], timestamp=False)
@@ -240,6 +245,6 @@ if __name__ == '__main__':
     from bspyalgo.utils.io import load_configs
     from bspyalgo.utils.io import save
     from bspytasks.benchmarks.vcdim.data_mgr import VCDimDataManager
-
-    results_path = find_single_gate('configs/benchmark_tests/capacity/template_ga_simulation.json', '[1 0 0 1]')
+    results_path = find_single_gate('configs/benchmark_tests/capacity/template_gd_noVal.json', '[0 0 0 1 1]', 5)
+    # results_path = find_single_gate('configs/benchmark_tests/capacity/template_ga_simulation.json', '[1 0 0 1]')
     # validate_single_gate('configs/benchmark_tests/capacity/template_ga_validation.json', results_path)
