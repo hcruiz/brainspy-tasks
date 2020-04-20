@@ -1,0 +1,20 @@
+{
+    "data_dir": "tmp/output/gd/capacity_test_experiments/NIPS/capacity_test_2020_04_17_213144/vc_dimension_6/validation/repeated_search/",
+    "npz_file": "result_arrays",
+    "show_plots": false, 
+    "processor": {
+        "architecture":"single_device",
+        "platform": "simulation",
+        "processor_type": "surrogate",
+        "torch_model_dict": "/home/hruiz/Documents/PROJECTS/DARWIN/Data_Darwin/Models/model_nips.pt",
+        "input_indices": [1,2],
+        "input_electrode_no": 7,
+        "shape": 420,
+        "waveform":{
+            "amplitude_lengths": 80,
+            "slope_lengths": 20,
+            "output_clipping_value": 400.0
+        }
+                },
+    "threshold_parameter": 0.5
+}

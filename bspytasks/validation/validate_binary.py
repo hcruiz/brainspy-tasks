@@ -72,6 +72,7 @@ def validate_outputs(configs):
     print(f"Capacity for N={N}: {capacity}")
 
     file_name = os.path.join(validator.validation_dir, 'validated_data')
+    print(f'Validated data saved in \n {file_name}')
     np.savez(file_name,
              mserror_array=mserror_array,
              correlation_array=correlation_array,
@@ -126,10 +127,10 @@ def validate_capacity(configs):
 
 
 if __name__ == "__main__":
-    # Validate single vc_dimension test, i.e. for a specific N
-    # configs = load_configs('configs/benchmark_tests/validation/validate_vcdim.json')
-    # capacity, correlation_array, accuracy_array, mserror_array = validate_outputs(configs)
+    # Validate outputs, i.e. vc_dimension test for a specific N
+    configs = load_configs('configs/benchmark_tests/validation/validate_outputs.json')
+    capacity, correlation_array, accuracy_array, mserror_array = validate_outputs(configs)
 
-    # Validate multiple vc_dim tests
-    configs = load_configs('configs/benchmark_tests/validation/test_validate_capacity.json')
-    validate_capacity(configs)
+    # # Validate multiple vc_dim tests
+    # configs = load_configs('configs/benchmark_tests/validation/test_validate_capacity.json')
+    # validate_capacity(configs)

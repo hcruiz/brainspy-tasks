@@ -46,7 +46,7 @@ class Hardware_Validator:
         inputs = self.clip(inputs, max_value=MAX_CLIPPING_VALUE, min_value=MIN_CLIPPING_VALUE)
         control_voltages = self.clip(control_voltages, max_value=MAX_CLIPPING_VALUE, min_value=MIN_CLIPPING_VALUE)
         input_matrix = self.generate_input_matrix(inputs, control_voltages)
-        assert len(input_matrix) == len(predictions), f"Prediction {len(input_matrix)} and input matrix {len(predictions)} have not the same lenghts"
+        # assert len(input_matrix) == len(predictions), f"Prediction {len(input_matrix)} and input matrix {len(predictions)} have not the same lenghts"
         self.configs["processor"]["shape"] = len(input_matrix)
         # if self.configs["processor"]["shape"] != len(predictions):
         #     print(f"Changing shape key of processor from value {self.configs['processor']['shape']} to {len(predictions)}")
@@ -65,7 +65,7 @@ class Hardware_Validator:
         # print(f'MSE: {str(error)}')
         # var_measurement = np.var(measurement[mask], ddof=1)
         # print(f'(var) NMSE: {100*error/var_measurement} %')
-        self.plot_validation(name, measurement[mask], predictions[mask], show_plots=self.show_plots, save_dir=self.validation_dir)
+        self.plot_validation(name, measurement[mask], predictions, show_plots=self.show_plots, save_dir=self.validation_dir)
         print('==========================================================================================')
         return error, var_measurement, measurement[mask]
 
